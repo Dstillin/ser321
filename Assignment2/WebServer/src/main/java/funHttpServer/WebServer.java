@@ -246,7 +246,6 @@ class WebServer {
 
 					Map<String, String> query_pairs = new LinkedHashMap<String, String>();
 
-
 					try {
 						query_pairs = splitQuery(request.replace("github?", ""));
 						String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
@@ -290,9 +289,94 @@ class WebServer {
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-				} else {
-					// if the request is not recognized at all
 
+
+				} else if(request.contains("add?")){
+					Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+
+					//Attempt to query input and do math
+					try {
+
+						//Extract path parameters
+						query_pairs = splitQuery(request.replace("add?", ""));
+
+						//Check for valid argument names
+						if (query_pairs.containsKey("num1") & query_pairs.containsKey("num2")) {
+
+							//Get and Convert values to integers.
+							float num1 = Float.parseFloat(query_pairs.get("num1"));
+							float num2 = Float.parseFloat(query_pairs.get("num2"));
+
+							//Math
+							float result = num1 + num2;
+
+							//Display successful result
+							builder.append("HTTP/1.1 200 OK\n");
+							builder.append("Content-Type: text/html; charset=utf-8\n");
+							builder.append("\n");
+							builder.append(num1 + " + " + num2 + " = " + result);
+						} else {
+							//Display error message
+							builder.append("HTTP/1.1 400 Bad Request\n");
+							builder.append("Content-Type: text/html; charset=utf-8\n");
+							builder.append("\n");
+							builder.append("Add requires two parameters with floating value arguments, num1=[Float] and num2=[Float].\n");
+							builder.append("\n");
+							builder.append("Example: add?num1=4.5&num2=4.6");
+						}
+					} catch (Exception exception) {
+						builder.append("HTTP/1.1 400 Bad Request\n");
+						builder.append("Content-Type: text/html; charset=utf-8\n");
+						builder.append("\n");
+						builder.append("Add requires two parameters with floating value arguments, num1=[Float] and num2=[Float].\n");
+						builder.append("\n");
+						builder.append("Example: add?num1=4.5&num2=4.5");
+					}
+				} else if(request.contains("bldstr?")){
+					Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+
+					//Attempt to query input and do math
+					try {
+
+						//Extract path parameters
+						query_pairs = splitQuery(request.replace("bldstr?", ""));
+
+						//Check for valid argument names
+						if (query_pairs.containsKey("str1") & query_pairs.containsKey("str2")) {
+
+							//Get and Convert values to integers.
+							String str1 = query_pairs.get("str1");
+							String str2 = query_pairs.get("str2");
+
+							//Add string together
+
+							//Display successful result
+							builder.append("HTTP/1.1 200 OK\n");
+							builder.append("Content-Type: text/html; charset=utf-8\n");
+							builder.append("\n");
+							builder.append(str1 + " " + str2
+											//Display successful result
+							);
+						} else {
+							//Display error message
+							builder.append("HTTP/1.1 400 Bad Request\n");
+							builder.append("Content-Type: text/html; charset=utf-8\n");
+							builder.append("\n");
+							builder.append("Add requires two parameters and arguments, str1=[String] and str2=[String].\n");
+							builder.append("\n");
+							builder.append("Example: bldstr?str1=hello&str2=world");
+						}
+					} catch (Exception exception) {
+						builder.append("HTTP/1.1 400 Bad Request\n");
+						builder.append("Content-Type: text/html; charset=utf-8\n");
+						builder.append("\n");
+						builder.append("Add requires two parameters and arguments, str1=[String] and str2=[String].\n");
+						builder.append("\n");
+						builder.append("Example: bldstr?str1=hello&str2=world");
+					}
+				}
+				else {
+					// if the request is not recognized at all
 					builder.append("HTTP/1.1 400 Bad Request\n");
 					builder.append("Content-Type: text/html; charset=utf-8\n");
 					builder.append("\n");
