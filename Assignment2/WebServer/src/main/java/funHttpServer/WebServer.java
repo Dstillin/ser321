@@ -16,6 +16,8 @@ write a response back
 
 package funHttpServer;
 
+import org.json.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -216,7 +218,7 @@ class WebServer {
 							builder.append("Content-Type: text/html; charset=utf-8\n");
 							builder.append("\n");
 							builder.append("Result is: " + result);
-						}	else {
+						} else {
 							//Display error message
 							builder.append("HTTP/1.1 400 Bad Request\n");
 							builder.append("Content-Type: text/html; charset=utf-8\n");
@@ -225,7 +227,6 @@ class WebServer {
 							builder.append("\n");
 							builder.append("Example: multiply?num1=4&num2=4");
 						}
-
 					} catch (Exception exception) {
 						builder.append("HTTP/1.1 400 Bad Request\n");
 						builder.append("Content-Type: text/html; charset=utf-8\n");
@@ -244,18 +245,51 @@ class WebServer {
 					//     "/repos/OWNERNAME/REPONAME/contributors"
 
 					Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-					query_pairs = splitQuery(request.replace("github?", ""));
-					String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
-					System.out.println(json);
 
-					builder.append("Check the todos mentioned in the Java source file");
-					// TODO: Parse the JSON returned by your fetch and create an appropriate
-					// response
-					// and list the owner name, owner id and name of the public repo on your webpage, e.g.
-					// amehlhase, 46384989 -> memoranda
-					// amehlhase, 46384989 -> ser316examples
-					// amehlhase, 46384989 -> test316
 
+					try {
+						query_pairs = splitQuery(request.replace("github?", ""));
+						String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
+						System.out.println(json);
+
+						//JSON array for parsing
+						JSONArray userRepos = new JSONArray(json);
+
+						//Builder for output
+						StringBuilder toPrint = new StringBuilder();
+
+						//Loop through user repos
+						for (int i = 0; i < userRepos.length(); i++) {
+
+							JSONObject repo = userRepos.getJSONObject(i);
+
+							//Repo Name
+							String repoName = repo.getString("name");
+
+							//Owner Name
+							JSONObject owner = repo.getJSONObject("owner");
+							String ownername = owner.getString("login");
+
+							//Owner ID
+							int ownerID = owner.getInt("id");
+
+							//Build string
+							toPrint.append(ownername).append(",").append(ownerID).append("->").append(repoName).append("||");
+						}
+
+						//Display successful result
+						builder.append("HTTP/1.1 200 OK\n");
+						builder.append("Content-Type: text/html; charset=utf-8\n");
+						builder.append("\n");
+						builder.append(toPrint);
+					} catch (UnsupportedEncodingException e) {
+						builder.append("HTTP/1.1 404 Not Found\n");
+						builder.append("Content-Type: text/html; charset=utf-8\n");
+						builder.append("\n");
+						builder.append("Search could not find query.");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				} else {
 					// if the request is not recognized at all
 
