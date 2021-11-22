@@ -40,6 +40,38 @@ class Performer {
         return json;
     }
 
+    public JSONObject remove(int index) {
+        JSONObject json = new JSONObject();
+
+        //  Validates index has a value
+        if(state.isWithinBounds(index)){
+            json.put("datatype", 1);
+            json.put("type", "remove");
+            json.put("data", state.remove(index));
+        } else {
+            json = error("Error: No string value is located at that index " + index);
+        }
+
+        return json;
+    }
+
+    public JSONObject display() {
+        JSONObject json = new JSONObject();
+        json.put("datatype", 1);
+        json.put("type", "display");
+        json.put("data", state.displayList());
+        return json;
+    }
+
+    public JSONObject count() {
+        JSONObject json = new JSONObject();
+        json.put("datatype", 2);
+        json.put("type", "count");
+        json.put("data", state.size());
+        json.put("option", state.displayList());
+        return json;
+    }
+
     public static JSONObject error(String err) {
         JSONObject json = new JSONObject();
         json.put("error", err);

@@ -17,7 +17,7 @@ request: { "selected": <int: 1=add, 2=remove, 3=display, 4=count, 5=reverse,
 
 ### Responses
 
-sucess response: {"type": <"add",
+success response: {"type": <"add",
 "remove", "display", "count", "reverse", "quit"> "data": <thing to return> }
 
 type <String>: echoes original selected from request (e.g. if request was "add", type will be "add")

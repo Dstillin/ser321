@@ -39,6 +39,8 @@ class Server {
             System.out.println("[Port] must be an integer");
             System.exit(2);
         }
+
+
         ServerSocket server = new ServerSocket(port);
         System.out.println("Server Started...");
         while (true) {
