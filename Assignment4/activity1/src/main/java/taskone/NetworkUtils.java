@@ -1,8 +1,8 @@
 /**
-  File: NetworkUtils.java
-  Author: Student in Fall 2020B
-  Description: NetworkUtils class in package taskone.
-*/
+ * File: NetworkUtils.java
+ * Author: Student in Fall 2020B
+ * Description: NetworkUtils class in package taskone.
+ */
 
 package taskone;
 
@@ -17,8 +17,8 @@ import java.io.OutputStream;
 public class NetworkUtils {
     // https://mkyong.com/java/java-convert-byte-to-int-and-vice-versa/
     public static byte[] intToBytes(final int data) {
-        return new byte[] { (byte) ((data >> 24) & 0xff), (byte) ((data >> 16) & 0xff), 
-            (byte) ((data >> 8) & 0xff), (byte) ((data >> 0) & 0xff), };
+        return new byte[]{(byte) ((data >> 24) & 0xff), (byte) ((data >> 16) & 0xff),
+                (byte) ((data >> 8) & 0xff), (byte) ((data >> 0) & 0xff),};
     }
 
     // https://mkyong.com/java/java-convert-byte-to-int-and-vice-versa/
@@ -26,7 +26,7 @@ public class NetworkUtils {
         return ((bytes[0] & 0xFF) << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8)
                 | ((bytes[3] & 0xFF) << 0);
     }
-    
+
     /**
      * send the bytes on the stream.
      */
@@ -57,7 +57,8 @@ public class NetworkUtils {
     // receive
     // next we call read again with the length of the actual bytes in the data we
     // are interested in
-    /** 
+
+    /**
      * Receive the bytes on the stream.
      */
     public static byte[] receive(InputStream in) throws IOException {

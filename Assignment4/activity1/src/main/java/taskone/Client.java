@@ -1,48 +1,36 @@
-/**
-  File: Client.java
-  Author: Student in Fall 2020B
-  Description: Client class in package taskone.
-*/
-
 package taskone;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.util.Base64;
-import java.util.Scanner;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import org.json.JSONObject;
 
+import java.io.*;
+import java.net.Socket;
+import java.util.Scanner;
+
 /**
- * Class: Client
- * Description: Client tasks.
+ * File: Client.java
+ * Author: Terry Grant Simpson
+ * Description: Client class in package task one.
  */
+
 public class Client {
+
     private static BufferedReader stdin;
 
     /**
      * Function JSONObject add().
      */
     public static JSONObject add() {
-        String strToSend = null;
         JSONObject request = new JSONObject();
+        String strToSend = null;
         request.put("selected", 1);
+
         try {
             System.out.print("Please input the string: ");
             strToSend = stdin.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         request.put("data", strToSend);
         return request;
     }
@@ -50,11 +38,35 @@ public class Client {
     /**
      * Function JSONObject remove().
      */
-    public static JSONObject pop() {
-        String strToSend = null;
-        int inNum;
+    public static JSONObject remove() {
         JSONObject request = new JSONObject();
+        String strToSend = null;
         request.put("selected", 2);
+
+        int inNum;
+        boolean validNum = false;
+        while (!validNum) {
+
+            // Valid input
+            try {
+                System.out.print("Please input the index: ");
+                strToSend = stdin.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //  Parse input
+            if (strToSend != null) {
+                try {
+                    inNum = Integer.parseInt(strToSend);
+                    request.put("data", inNum);
+                    validNum = true;
+                } catch (NumberFormatException ne) {
+                    System.out.println("Input is not number, continue");
+                }
+            }
+        }
+
         return request;
     }
 
@@ -81,36 +93,34 @@ public class Client {
     /**
      * Function JSONObject reverse().
      */
-    public static JSONObject switching() {
-        String strToSend = null;
-        int inNum;
+    public static JSONObject reverse() {
         JSONObject request = new JSONObject();
         request.put("selected", 5);
-        int numInput = 0;
-        int first = 0;
-        int last = 0;
-        while (true) {
+
+        String strToSend = null;
+        int inNum;
+        boolean validNum = false;
+        while (!validNum) {
             System.out.print("Please input the index: ");
+
+            //  Read input
             try {
                 strToSend = stdin.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            try {
-                inNum = Integer.parseInt(strToSend);
-                if (numInput == 0) {
-                    first = inNum;
-                    numInput = 1;
-                } else {
-                    last = inNum;
-                    break;
+
+            //  Parse input
+            if (strToSend != null) {
+                try {
+                    inNum = Integer.parseInt(strToSend);
+                    request.put("data", inNum);
+                    validNum = true;
+                } catch (NumberFormatException ne) {
+                    System.out.println("Input is not number, continue");
                 }
-                
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not number, continue");
             }
         }
-        request.put("data", first+ " " + last);
         return request;
     }
 
@@ -155,24 +165,29 @@ public class Client {
             int choice;
             do {
                 System.out.println();
-                // TODO: you will need to change the menu based on the tasks for this assignment, see Readme!
                 System.out.println("Client Menu");
-                System.out.println("Please select a valid option (1-5). 0 to diconnect the client");
+                System.out.println("Please select a valid option (1-5). 0 to disconnect the client");
                 System.out.println("1. add <string> - adds a string to the list and display it");
-                System.out.println("2. pop - remove the top elemnt");
+                System.out.println("2. remove <integer>- remove element at index");
                 System.out.println("3. display - display the list");
-                System.out.println("4. count - returns the elements in the list");
-                System.out.println("5. switch <int> <int> - switch two string");
+                System.out.println("4. count - returns the number of elements in the list");
+                System.out.println("5. reverse <integer> - reverse the string at index");
                 System.out.println("0. quit");
                 System.out.println();
-                choice = input.nextInt(); // what if not int.. should error handle this
+
+                // Input error handling
+                if (input.hasNextInt()) {
+                    choice = input.nextInt();
+                } else {
+                    choice = 99;  // fail here
+                }
                 JSONObject request = null;
                 switch (choice) {
                     case (1):
                         request = add();
                         break;
                     case (2):
-                        request = pop();
+                        request = remove();
                         break;
                     case (3):
                         request = display();
@@ -181,7 +196,7 @@ public class Client {
                         request = count();
                         break;
                     case (5):
-                        request = switching();
+                        request = reverse();
                         break;
                     case (0):
                         request = quit();

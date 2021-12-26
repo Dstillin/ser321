@@ -1,3 +1,5 @@
+package taskone;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import taskone.StringList;
@@ -7,12 +9,14 @@ import java.io.PrintStream;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * StringListTest.java
  *
  * @author Terry Grant Simpson
  * updated  11/21/2021
  */
+
 class StringListTest {
 
   StringList list;
@@ -103,6 +107,11 @@ class StringListTest {
     assertTrue(list.reverse(1).equalsIgnoreCase("tnarg\nalleirbaG\nSunnie\nSimpson\nAdded"));
     assertTrue(list.reverse(2).equalsIgnoreCase("tnarg\nalleirbaG\neinnuS\nSimpson\nAdded"));
     assertTrue(list.reverse(3).equalsIgnoreCase("tnarg\nalleirbaG\neinnuS\nnospmiS\nAdded"));
+  }
+
+  @Test
+  void listSizeThenDisplayed() {
+    assertTrue(list.size() == 5);
   }
 
 }

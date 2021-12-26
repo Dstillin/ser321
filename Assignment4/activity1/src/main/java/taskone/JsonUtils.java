@@ -1,8 +1,8 @@
 /**
-  File: JsonUtils.java
-  Author: Student in Fall 2020B
-  Description: JsonUtils class in package taskone.
-*/
+ * File: JsonUtils.java
+ * Author: Student in Fall 2020B
+ * Description: JsonUtils class in package taskone.
+ */
 
 package taskone;
 
