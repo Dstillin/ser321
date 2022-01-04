@@ -1,7 +1,6 @@
 plugins {
   id 'java'
   id "com.google.protobuf" version "0.8.13" apply true
-
 }
 
 description = "Protocol Buffers Socket Example"
@@ -17,12 +16,13 @@ dependencies {
 }
 
 protobuf {
+    generatedFilesBaseDir = "$projectDir/src"
     protoc {
         artifact = 'com.google.protobuf:protoc:3.13.0'
     }
 }
  def host = 'localhost'
- def port = 9099
+ def port = '9099'
 
 // task reading in the arguments if any given, if not the default from above will be used
 task arguments {
@@ -34,7 +34,7 @@ task arguments {
     }
 }
 
-//gradle runClient -Pport=9099 -Phost='localhost' -Pfile='data.json'
+//gradle runClient -Pport=9099 -Phost='localhost'
 task runClient(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   description = "Run Client"
@@ -51,8 +51,11 @@ task runServer(type: JavaExec) {
   description = "Run Server"
   main = 'server.SockBaseServer'
   // default args
-  args port
-  args '1000' // sleep delay will always be this
+    if (project.hasProperty("port")) {
+        port = project.getProperty("port")
+    } else{
+        args port
+    }
 }
 
 

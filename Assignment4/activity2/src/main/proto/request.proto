@@ -5,7 +5,6 @@ package operation;
 option java_package = "buffers";
 option java_outer_classname = "RequestProtos";
 
-
 // every request has one of these types
 message Request {
   enum OperationType {
@@ -26,7 +25,7 @@ message Request {
 // see the starter code on how to use this, e.g. writeToLog("Mehlhase", Message.CONNECT) would write a log for connecting to your server for me into your log file
 enum Message {
   CONNECT = 0;        // when a client connects to your server
-  START = 1;          // when a client starts a gam e
+  START = 1;          // when a client starts a game
   WIN = 2;            // when a client wins
 }
 
