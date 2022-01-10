@@ -1,80 +1,89 @@
 package mergeSort;
 
-import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 public class MergeSort {
-  /**
-   * Thread that declares the lambda and then initiates the work
-   */
 
-  public static int message_id = 0;
+    public static void main(String[] args) {
 
-  public static JSONObject init(int[] array) {
-    JSONArray arr = new JSONArray();
-    for (var i : array) {
-      arr.put(i);
+        int[] test1 = generateArray(50);
+        Stopwatch stopwatch1 = new Stopwatch(); //start timer
+        Test(Integer.parseInt(args[0]), args[1], test1);
+        System.out.println("Time = " + stopwatch1.elapsedTime());
+
+        int[] test2 = generateArray(100);
+        Stopwatch stopwatch2 = new Stopwatch(); //start timer
+        Test(Integer.parseInt(args[0]), args[1], test1);
+        System.out.println("Time = " + stopwatch2.elapsedTime());
+
+        int[] test3 = generateArray(200);
+        Stopwatch stopwatch3 = new Stopwatch(); //start timer
+        Test(Integer.parseInt(args[0]), args[1], test3);
+        System.out.println("Time = " + stopwatch3.elapsedTime());
+
+        int[] test4 = generateArray(400);
+        Stopwatch stopwatch4 = new Stopwatch(); //start timer
+        Test(Integer.parseInt(args[0]), args[1], test4);
+        System.out.println("Time = " + stopwatch4.elapsedTime());
+
+        int[] test5 = generateArray(800);
+        Stopwatch stopwatch5 = new Stopwatch(); //start timer
+        Test(Integer.parseInt(args[0]), args[1], test5);
+        System.out.println("Time = " + stopwatch5.elapsedTime());
+
     }
-    JSONObject req = new JSONObject();
-    req.put("method", "init");
-    req.put("data", arr);
-    return req;
-  }
 
-  public static JSONObject peek() {
-    JSONObject req = new JSONObject();
-    req.put("method", "peek");
-    return req;
-  }
-
-  public static JSONObject remove() {
-    JSONObject req = new JSONObject();
-    req.put("method", "remove");
-    return req;
-  }
-  
-  public static void Test(int port, String host) {
-    int[] a = { 5, 1, 6, 2, 3, 4, 10,634,34,23,653, 23,2 ,6};
-    JSONObject response = NetworkUtils.send(host, port, init(a));
-    
-    System.out.println(response);
-    response = NetworkUtils.send(host, port, peek());
-    System.out.println(response);
-
-    while (true) {
-      response = NetworkUtils.send(host, port, remove());
-
-      if (response.getBoolean("hasValue")) {
-        System.out.println(response);;
- 
-      } else{
-        break;
-      }
+    private static int[] generateArray(int size) {
+        int[] a = new int[size];
+        //generate random number
+        for (int i = 0; i < size; i++) {
+            int rand = (int) ((Math.random() * (1000 - 1)) + 1);
+            a[i] = rand;
+        }
+        return a;
     }
-  }
 
-  public static void main(String[] args) {
-    
-    // use the port of one of the branches to test things
-    Test(Integer.valueOf(args[0]), args[1]);
+    public static void Test(int port, String host, int[] arr) {
 
-  }
+        JSONObject response = NetworkUtils.send(host, port, init(arr));
+
+        System.out.println(response);
+        response = NetworkUtils.send(host, port, peek());
+        System.out.println(response);
+
+        while (true) {
+            response = NetworkUtils.send(host, port, remove());
+
+            if (response != null && response.getBoolean("hasValue")) {
+                System.out.println(response);
+            } else {
+                break;
+            }
+        }
+    }
+
+    public static JSONObject init(int[] array) {
+        JSONArray arr = new JSONArray();
+        for (int i : array) {
+            arr.put(i);
+        }
+        JSONObject req = new JSONObject();
+        req.put("method", "init");
+        req.put("data", arr);
+        return req;
+    }
+
+    public static JSONObject peek() {
+        JSONObject req = new JSONObject();
+        req.put("method", "peek");
+        return req;
+    }
+
+    public static JSONObject remove() {
+        JSONObject req = new JSONObject();
+        req.put("method", "remove");
+        return req;
+    }
 }
+
