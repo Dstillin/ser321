@@ -52,3 +52,25 @@ task Sorter(type: JavaExec) {
   standardInput = System.in
   args 8000
 }
+
+task ServerSorter1(type: JavaExec) {
+  group 'simple'
+  description 'Base sample'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'mergeSort.Sorter'
+  standardInput = System.in
+  args 8000
+}
+
+task ServerSorter2(type: JavaExec) {
+  group 'simple'
+  description 'Base sample'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'mergeSort.Sorter'
+  standardInput = System.in
+  args 8001
+}
