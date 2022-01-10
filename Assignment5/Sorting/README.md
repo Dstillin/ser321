@@ -75,3 +75,8 @@ During The experiment, I noticed that the processing time for each test case inc
 Between the three ports about 100 tcp packets are generated for one value to be processed.  One possible solution to reduce the traffic is to use another node to contain the results and send to the client.
 
 ## Activity 1: Task 2
+1. Do you expect changes in runtimes? Why, why not?
+I expected to see runtimes increase due to physical distance between the sorters and branch. Also, there is will be 
+2. Do you see a difference how long it takes to sort the arrays? Explain the differences
+   (or why there are not differences)
+   As I expected the results of the sorting did increase.  
