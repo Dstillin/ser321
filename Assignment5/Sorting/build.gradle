@@ -37,8 +37,8 @@ task Branch(type: JavaExec) {
   args 7000
   args 8000
   args 8001
-  args "localhost"
-  args "localhost"
+  args "18.217.179.102"
+  args "18.217.179.102"
 
 }
 

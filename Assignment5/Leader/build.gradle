@@ -1,4 +1,9 @@
-// set as java application
+plugins {
+    id 'java'
+    id 'application'
+}
+
+apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
@@ -6,47 +11,83 @@ repositories {
 }
 
 dependencies {
-   // https://mvnrepository.com/artifact/org.json/json
-compile group: 'org.json', name: 'json', version: '20200518'
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20200518'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
-//define main class
-mainClassName = 'NodeStarter'
 
-task Starter(type: JavaExec) {
-  group 'simple'
-  description 'Base sample'
-
+task TC(type: JavaExec) {
+  group '2-Phase Commit'
+  description 'Transaction Coordinator'
   classpath = sourceSets.main.runtimeClasspath
+  main = 'two_phase_commit.TransactionCoordinator'
+  standardInput = System.in
+  	
+  if (project.hasProperty('port') && project.hasProperty('leftport')&& project.hasProperty('rightport')&& project.hasProperty('lefthost')&& project.hasProperty('righthost')) {
+	args project.property('port')
+	args project.property('leftport')
+	args project.property('rightport')
+	args project.property('lefthost')
+	args project.property('righthost')
+  } else {
+	args '8000'
+	args '8001'
+	args '8002'
+	args 'localhost'
+	args 'localhost'
+  }	
+  
+}
 
-  main = 'mergeSort.MergeSort'
+task node1(type: JavaExec) {
+  group '2-Phase Commit'
+  description 'Node 1 Participant'
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'two_phase_commit.Node'
+  standardInput = System.in
+  	
+  if (project.hasProperty('port') && project.hasProperty('id')) {
+	args project.property('port')
+	args project.property('id')
+  } else {
+	args '8001'
+	args '1'
+  }	
+  
+}
+
+task node2(type: JavaExec) {
+  group '2-Phase Commit'
+  description 'Node 2 Participant'
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'two_phase_commit.Node'
   standardInput = System.in
 
-  args 7000
-  args "localhost"
+    if (project.hasProperty('port') && project.hasProperty('id')) {
+        args project.property('port')
+        args project.property('id')
+    } else {
+        args '8002'
+        args '2'
+    }
+
 }
 
-task Branch(type: JavaExec) {
-  group 'simple'
-  description 'Base sample'
-
+task Client(type: JavaExec) {
+  group '2-Phase Commit'
+  description 'Client'
   classpath = sourceSets.main.runtimeClasspath
-
-  main = 'mergeSort.Branch'
+  main = 'two_phase_commit.Client'
   standardInput = System.in
-  args 7000
-  args 8000
-  args 8001
 
+  if (project.hasProperty('port') && project.hasProperty('host')) {
+	args project.property('port')
+	args project.property('host')
+  } else {
+	args '8000'
+	args 'localhost'
+  }
 }
 
-task Sorter(type: JavaExec) {
-  group 'simple'
-  description 'Base sample'
-
-  classpath = sourceSets.main.runtimeClasspath
-
-  main = 'mergeSort.Sorter'
-  standardInput = System.in
-  args 8000
-}

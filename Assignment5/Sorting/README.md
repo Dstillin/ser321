@@ -14,16 +14,16 @@ SER-321:  Assignment 5
 To understand the distributed system's performance, I ran ten test cases using the "MergeSort" class.  Each test randomly generates integer values within the range of zero to 1000.  The array size for each test would double in size from the previous set.  The initial array contains 500 integers, while the last and most extensive collection would include 128000.  Each test case includes a timer that records the total time to complete the sort.  The purpose of this experiment was to gain some insight into the overall system's performance as the array size increases.  I created the "LocalSorter" class to simulate the array processing locally.  The "LocalSorter" is a merge sorter that utilizes the same range and size of data.
 
 ####MergeSort class Results:
-Size = 250       |    Test 0 completion time = 0.2583581
-Size = 500       |    Test 1 completion time = 0.3914726
+Size = 250      |    Test 0 completion time = 0.2583581
+Size = 500      |    Test 1 completion time = 0.3914726
 Size = 1000     |    Test 2 completion time = 0.7663992
 Size = 2000     |    Test 3 completion time = 1.4060292
 Size = 4000     |    Test 4 completion time = 2.7449845
 Size = 8000     |    Test 5 completion time = 5.4346051
-Size = 16000   |    Test 6 completion time = 10.7798445
-Size = 32000   |    Test 7 completion time = 21.5123471
-Size = 64000   |    Test 8 completion time = 42.8922081
-Size = 128000 |    Test 9 completion time = 86.3626807  
+Size = 16000    |    Test 6 completion time = 10.7798445
+Size = 32000    |    Test 7 completion time = 21.5123471
+Size = 64000    |    Test 8 completion time = 42.8922081
+Size = 128000   |    Test 9 completion time = 86.3626807  
 
 ####LocalSort class Results:
 Size = 250	    |		Test 0 completion time = 0.0016109
@@ -55,7 +55,6 @@ Test 5 completion time = 11.3708122
 Test 6 completion time = 22.226633
 Test 7 completion time = 44.5613409
 Test 8 completion time = 90.1487529
-Test 9 completion time = 185.1660509
 
 ####3 Branch 4 Sorter setup results:
 Test 0 completion time = 1.1583454
@@ -71,12 +70,18 @@ Test 8 completion time = 131.807053
 ###Analysis:
 During The experiment, I noticed that the processing time for each test case increased when I added more nodes to the system. The processing time increased as I said more parent nodes. The results show that the processing time grew for each test case when the system got larger. I did not witness any added benefit from the distributed system.
 
-5. Explain the traﬃc that you see on Wireshark. How much traﬃc is generated with this setup and do you see a way to reduce it?
+5. Explain the traffic that you see on Wireshark. How much traffic is generated with this setup and do you see a way to reduce it?
 Between the three ports about 100 tcp packets are generated for one value to be processed.  One possible solution to reduce the traffic is to use another node to contain the results and send to the client.
 
 ## Activity 1: Task 2
 1. Do you expect changes in runtimes? Why, why not?
-I expected to see runtimes increase due to physical distance between the sorters and branch. Also, there is will be 
-2. Do you see a difference how long it takes to sort the arrays? Explain the differences
-   (or why there are not differences)
-   As I expected the results of the sorting did increase.  
+I expected to see runtimes increase due to physical distance between the sorters and branch.
+
+2. Do you see a difference how long it takes to sort the arrays? Explain the differences (or why there are not differences).
+As I expected the results of the sorting did increase.  To test the difference I wanted to perorm some baseline completion time by using an array of 50 elements.  After sorting was complete the completion time was 18.81 seconds. This time was compared sorting 32000 values with a local setup.
+
+## Activity 1: Task 3
+1. Does it make sense to run the algorithm as a distributed algorithm? Why or why not?
+I don't believe that it makes sense to use this program in a distibuted system because of the performance time.  If the data sets are extremely large I could see this being functional in sense of preserving node resources.  
+
+
