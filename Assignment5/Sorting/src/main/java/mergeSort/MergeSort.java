@@ -12,25 +12,6 @@ public class MergeSort {
         Test(Integer.parseInt(args[0]), args[1], test1);
         System.out.println("Time = " + stopwatch1.elapsedTime());
 
-        int[] test2 = generateArray(100);
-        Stopwatch stopwatch2 = new Stopwatch(); //start timer
-        Test(Integer.parseInt(args[0]), args[1], test1);
-        System.out.println("Time = " + stopwatch2.elapsedTime());
-
-        int[] test3 = generateArray(200);
-        Stopwatch stopwatch3 = new Stopwatch(); //start timer
-        Test(Integer.parseInt(args[0]), args[1], test3);
-        System.out.println("Time = " + stopwatch3.elapsedTime());
-
-        int[] test4 = generateArray(400);
-        Stopwatch stopwatch4 = new Stopwatch(); //start timer
-        Test(Integer.parseInt(args[0]), args[1], test4);
-        System.out.println("Time = " + stopwatch4.elapsedTime());
-
-        int[] test5 = generateArray(800);
-        Stopwatch stopwatch5 = new Stopwatch(); //start timer
-        Test(Integer.parseInt(args[0]), args[1], test5);
-        System.out.println("Time = " + stopwatch5.elapsedTime());
 
     }
 
