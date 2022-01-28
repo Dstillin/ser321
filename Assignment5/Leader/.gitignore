@@ -11,7 +11,7 @@
 .mtj.tmp/
 
 # Gradle #
-.gradle/*
+/.gradle/*
 build/*
 /build/
 
