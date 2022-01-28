@@ -5,15 +5,17 @@ SER-321:  Assignment 5
 The purpose of this program is to highlight a successful transaction using the two-phase commit protocol. This is achieved when the client requests to add a new string to a list managed by the Transaction Coordinator (TC) class.  Requests and responses are in the form of JSON and passed to and from all sources and destinations (communication protocol listed below). Once the request is received by the TC it deploys the two-phase commit protocol to node1 and node2 for approval. Phase one of the two-phase commit is implemented by the TC atomically sending a "PREPARE" request followed by both nodes responding with "READY" response.  Phase two is implemented by the TC atomically sending a "VOTE_TO_COMMIT" request and both nodes responding with a "COMMITTED" response.  Once both phases are completed then the TC can finally add the Clients string to the existing list.  It's important to note that the prior to the TC sending and receiving messages it checks the state of both nodes.  If a node fails the TC aborts the current transaction and sends and appropriate response to the client.
 
 
-###Communication Protocol:
-####Client Requests
+### Communication Protocol
+#### Client Requests
+
 	quit = request.put("message", "quit")
 
 	display = request.put("message", "display")
 
 	add(String newTip) = request.put("message", "add")
 	                     request.put("data", newTip)
-###Transaction Coordinator Client Responses
+#### Transaction Coordinator Client Responses
+
 	add(String strToAdd) = response.put("message", "add")
                            response.put("data", strToAdd)
 
@@ -22,13 +24,16 @@ The purpose of this program is to highlight a successful transaction using the t
 
 	display(StringList list) = response.put("message", "display")
                                response.put("data", list.displayList())
-###Transaction Coordinator Requests
+			       
+#### Transaction Coordinator Requests
+
 	prepare = request.put("message", "PREPARE")
 
 	vote_to_commit = request.put("message", "VOTE_TO_COMMIT")
 
 	abort = request.put("message", "ABORT")
-###Node Responses
+#### Node Responses
+
 	ready = response.put("message", "READY")
 
 	not_ready = response.put("message", "NOT_READY")
@@ -38,9 +43,10 @@ The purpose of this program is to highlight a successful transaction using the t
 	not_committed = response.put("message", "NOT_COMMITTED")
 
 	aborted = response.put("message", "ABORTED")
-## How to run the program
+	
+### How to run the program
 Please use the following commands in the sequence that listed below.  It's important to note that console=plain does not need to be included because it's included within the gradle.properties file
-### Run in Terminal with default values
+#### Run in Terminal with default values
 ```
 For Node1: run "gradle node1" 
 Defaults include port=8001 id=1
@@ -58,7 +64,7 @@ For Client: run "gradle Client"
 Defaults include port=8000 host=localhost
 ``` 
 
-## Run in Terminal with Custom Values
+#### Run in Terminal with Custom Values
 ```
 For Node1: run "gradle node1 -Pport=<value> -Pid=<value>" 
 Notes: id is used to help identify messages found in the console view. The data is trivial.
