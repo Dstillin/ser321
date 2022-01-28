@@ -10,10 +10,10 @@ SER-321:  Assignment 5
    
 2. Run the code with different arrays to sort (different sizes, numbers etc.) and include code to measure the time (you can just enter start and end times). In your Readme describe your experiments and your analyses of them. E.g. why is the result as it is? Does the distribution help? Why, why not? See this as setting up your own experiment and give me a good description and evaluation.
 
-###Experiment:
+### Experiment:
 To understand the distributed system's performance, I ran ten test cases using the "MergeSort" class.  Each test randomly generates integer values within the range of zero to 1000.  The array size for each test would double in size from the previous set.  The initial array contains 500 integers, while the last and most extensive collection would include 128000.  Each test case includes a timer that records the total time to complete the sort.  The purpose of this experiment was to gain some insight into the overall system's performance as the array size increases.  I created the "LocalSorter" class to simulate the array processing locally.  The "LocalSorter" is a merge sorter that utilizes the same range and size of data.
 
-####MergeSort class Results:
+#### MergeSort class Results:
 Size = 250      |    Test 0 completion time = 0.2583581
 Size = 500      |    Test 1 completion time = 0.3914726
 Size = 1000     |    Test 2 completion time = 0.7663992
@@ -25,7 +25,7 @@ Size = 32000    |    Test 7 completion time = 21.5123471
 Size = 64000    |    Test 8 completion time = 42.8922081
 Size = 128000   |    Test 9 completion time = 86.3626807  
 
-####LocalSort class Results:
+#### LocalSort class Results:
 Size = 250	    |		Test 0 completion time = 0.0016109
 Size = 500	    |		Test 1 completion time = 0.0010338
 Size = 1000	    |		Test 2 completion time = 0.0032949
@@ -37,15 +37,15 @@ Size = 32000   	|		Test 7 completion time = 1.0750476
 Size = 64000   	|		Test 8 completion time = 4.6733537
 Size = 128000	|		Test 9 completion time = 13.3065717
 
-###Analysis:
+### Analysis:
 The results provide us insight into how to scale larger array sizes. After analyzing the results, I believe that it's safe to say that as the array size doubles, so will the completion time. Waiting for a minute and thirty seconds isn't too long to sort 128000 numbers; however, these metrics might not fit user requirements. Depending on the constraints, one could say that after an array size of X, the system would need a new branch and associated nodes to meet the non-functional restrictions. If the goal of this system were to improve performance, it would hinder the performance rather than improve it. The LocalSort class results show that using the distributed system would not be optimal if performance was the goal. However, the distributed system could help with node resources with larger data sets. With that said, the distributed system could help with node resources with large data sets. On the other hand, the distributed system lacks performance due to constant communication between nodes.
 
 3. Experiment with the "tree" setup, what happens with more or less nodes when sorting the same array and different arrays? When does the distribution make things better? Does it ever make things faster? As in the previous step experiment and describe your experiment and your results in detail.
 
-###Experiment:
+### Experiment:
 In this experiment, I decided to set up two configurations using a combination of the branch and sorter classes. One system configuration included two branch classes and three instances of the sorter class. The other configuration contained three branches and four sorters. Both structures utilized the same method to generate the arrays as in the previous experiment. I also used the same approach to determine the processing time for each test case per configuration.
 
-####2 Branch 3 Sorter setup results:
+#### 2 Branch 3 Sorter setup results:
 Test 0 completion time = 0.7413174
 Test 1 completion time = 1.0368642
 Test 2 completion time = 1.8747408
@@ -56,7 +56,7 @@ Test 6 completion time = 22.226633
 Test 7 completion time = 44.5613409
 Test 8 completion time = 90.1487529
 
-####3 Branch 4 Sorter setup results:
+#### 3 Branch 4 Sorter setup results:
 Test 0 completion time = 1.1583454
 Test 1 completion time = 1.4239591
 Test 2 completion time = 2.4555887
@@ -67,7 +67,7 @@ Test 6 completion time = 31.4570298
 Test 7 completion time = 79.8377261
 Test 8 completion time = 131.807053
 
-###Analysis:
+### Analysis:
 During The experiment, I noticed that the processing time for each test case increased when I added more nodes to the system. The processing time increased as I said more parent nodes. The results show that the processing time grew for each test case when the system got larger. I did not witness any added benefit from the distributed system.
 
 5. Explain the traffic that you see on Wireshark. How much traffic is generated with this setup and do you see a way to reduce it?
