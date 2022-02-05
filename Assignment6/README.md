@@ -18,7 +18,7 @@ messages
 - CalcRequest => repeated double num = 1 	
 - CalcResponse => bool isSuccess = 1 | double solution = 2 | string error = 3
 
-###Echo Service
+### Echo Service
 services
 - parrot (ClientRequest) returns (ServerResponse)
 
@@ -135,7 +135,7 @@ Notes: ensure that host and port values correlate to the corresponding nodes
 ``` 
 
 ## Requirements Met
-###Task 1: Starting services locally (50 points)
+### Task 1: Starting services locally (50 points)
 1. (3 points) Must have: We need to be able to run the service node through "gradle
 runNode" which should use default arguments, and the client through "gradle runClientJava" using the correct default values to connect to the started service node!!!!
 If this does not work we will not run things.
@@ -153,13 +153,13 @@ give good output results and also of course shows what was called. This will cal
 server directly without using any registry. So basically shows your test cases running
 successfully. See video about Task 1 for more details.
 5. (5 points) Server and Client should be robust and not crash.
-###Task 2: Creating a service (Golf service)
+### Task 2: Creating a service (Golf service)
 1. Service allows at least two different requests
 2. Each request needs at least one input
 3. Response returns different data for different requests
 4. Response returns a repeated field
 5. Data is held persistent on the server
-###Task 3.1: Register locally
+### Task 3.1: Register locally
 1. MUST: Create a new version of your Node.java ==> NodeService.java and your
 EchoClient.java ==> Client.java. You should be able to call them through "gradle
 registerServiceNode" and "gradle runClient2" asking for the same parameters as the
