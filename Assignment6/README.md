@@ -6,8 +6,8 @@ For Task 1, the purpose of this program was to implement additional services to 
 
 In Task 3, an additional client (Client.java) and server (NodeService.java) was created to use the registry server compared to the server with the service.  This was to simulate a real world example of a client not knowning the services server address and port. With that being said if a server with a service/s is not registered to the registry server then the client not be able to access that service.  Again, in order for the client to gain access to a service in this task, the client must contact the registry server and search for the service and if the service exists the registry server sends a message back to the client with the services connection address.  At this point the client can access the services ip address and port number and make requests.   
 
-###gRPC Communication Protocol:
-###Calc Service
+### gRPC Communication Protocol:
+### Calc Service
 services
 - add (CalcRequest) returns (CalcResponse)
 - subtract (CalcRequest) returns (CalcResponse)
@@ -26,7 +26,7 @@ messages
 - ClientRequest => string message = 1
 - ServerResponse => string message = 1
 
-###Golf Service
+### Golf Service
 services
 - recordScore (RecordScoreReq) returns (RecordScoreRes)
 - getAllScores (NoMessage) returns (AllScoresRes)
@@ -38,7 +38,7 @@ messages
 - AllScoresRes => bool isSuccess = 1 | repeated CourseScoreEntry scores = 2 | string error = 3
 - CourseScoreEntry => string name = 1 | string courseName = 2 | int32 score = 3 | string date = 4
 
-###Joke Service
+### Joke Service
 services
 - getJoke (JokeReq) returns (JokeRes)
 - setJoke (JokeSetReq) returns (JokeSetRes)
@@ -49,7 +49,7 @@ messages
 - JokeSetReq => string joke = 1
 - JokeSetRes => bool ok = 1 | string message = 2
 
-###Story Service
+### Story Service
 services
 - read (Empty) returns (ReadResponse)
 - write (WriteRequest) returns (WriteResponse)
