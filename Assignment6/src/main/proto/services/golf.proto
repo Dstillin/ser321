@@ -1,0 +1,52 @@
+// A simple game of rock paper scissors where the client plays against the server
+// The client can either play, or check the leaderboard
+// This means you need to keep track of the number of times someone has won or lost
+// The server should choose either rock paper or scissors randomly
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "service";
+option java_outer_classname = "GolfProto";
+
+package services;
+
+service Golf {
+  rpc recordScore (RecordScoreReq) returns (RecordScoreRes) {}
+  rpc getAllScores (NoMessage) returns (AllScoresRes) {}
+}
+
+message NoMessage{}
+
+// The request message
+message RecordScoreReq {
+  string name = 1;
+  string courseName = 2;
+  string date = 3;
+  int32 score = 4;
+}
+
+
+// The response message
+message RecordScoreRes {
+  bool isSuccess = 1;
+  string message = 3; // Example "You set the new course record | You didn't set the course record"
+  string error = 5; // Error message, a String of your choice to show what went wrong if an error occurred isSuccess would then be false
+}
+
+// The response message
+message AllScoresRes {
+  bool isSuccess = 1;
+  repeated CourseScoreEntry scores = 2;
+  string error = 3; // Error message, a String of your choice to show what went wrong if an error occurred -- isSuccess would then be false
+}
+
+// One entry in the leaderboard
+message CourseScoreEntry {
+  string name = 1; // name of player
+  string courseName = 2; // course name
+  int32 score = 3; // course score
+  string date = 4; // date score was recorded
+}
+
+
